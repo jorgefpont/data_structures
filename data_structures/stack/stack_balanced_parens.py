@@ -2,18 +2,6 @@
 """
 Use a stack to check whether or not a string
 has balanced usage of parenthesis.
-
-Example:
-    (), ()(), (({[]}))  <- Balanced.
-    ((), {{{)}], [][]]] <- Not Balanced.
-
-
-Balanced Example: {[]}
-
-
-Non-Balanced Example: (()
-
-Non-Balanced Example: ))
 """
 
 from stack import Stack
@@ -37,15 +25,25 @@ def is_paren_balanced(paren_string):
 
     while index < len(paren_string) and is_balanced:
         paren = paren_string[index]
+        # if the element at the position index is a paren,
+        # push it to the stack
+        print(index, paren)
         if paren in "([{":
             s.push(paren)
         else:
+            # if the next element is empty, parens are not balanced
             if s.is_empty():
                 is_balanced = False
             else:
+                # if next element is not empty
+                # pop the top element of the stack (a paren)
                 top = s.pop()
+                # compare it to the expected closing paren
                 if not is_match(top, paren):
                     is_balanced = False
+
+            print(f'Intermediate: {index}, {top}, {paren}, {is_balanced}')
+
         index += 1
 
     if s.is_empty() and is_balanced:
@@ -54,8 +52,12 @@ def is_paren_balanced(paren_string):
         return False
 
 
-print(is_paren_balanced("(((({}))))"))
+# test
+test_s = ["(((({}))))",
+          "[][]]]",
+          "[][]"]
 
-print(is_paren_balanced("[][]]]"))
-print(is_paren_balanced("[][]"))
-
+for s in test_s:
+    print(s)
+    is_paren_balanced(s)
+    print()
