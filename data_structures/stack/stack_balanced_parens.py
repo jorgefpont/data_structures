@@ -25,24 +25,27 @@ def is_paren_balanced(paren_string):
 
     while index < len(paren_string) and is_balanced:
         paren = paren_string[index]
-        # if the element at the position index is a paren,
+        # if the element at the position index is an opening paren,
         # push it to the stack
-        print(index, paren)
+        print(f'Index: {index}, paren: {paren}')
         if paren in "([{":
             s.push(paren)
+            print(f'Stack: {s.get_stack()}')
         else:
+            print('Not an opening paren')
             # if the next element is empty, parens are not balanced
             if s.is_empty():
                 is_balanced = False
             else:
-                # if next element is not empty
-                # pop the top element of the stack (a paren)
-                top = s.pop()
+                # if next element is not empty or an opening paren,
+                # pop the top element off the stack, and
                 # compare it to the expected closing paren
+                top = s.pop()
+                print(f'Stack: {s.get_stack()}')
                 if not is_match(top, paren):
                     is_balanced = False
 
-            print(f'Intermediate: {index}, {top}, {paren}, {is_balanced}')
+            print(f'popped: {top}, paren: {paren}, balanced: {is_balanced}')
 
         index += 1
 
